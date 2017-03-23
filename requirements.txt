@@ -1,0 +1,8 @@
+Django
+argparse
+django-crispy-forms
+django-filter
+djangorestframework
+uuid
+django-cors-headers
+pymysql
