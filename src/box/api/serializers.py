@@ -83,6 +83,12 @@ class UserSerializer(ModelSerializer):
 
 class WeightSerializer(ModelSerializer):
     url_path = "weight"
+    box = SlugRelatedField(
+        many=False,
+        read_only=False,
+        slug_field='name',
+        queryset=Box.objects.all()
+    )
 
     class Meta(object):
         model = Weight
