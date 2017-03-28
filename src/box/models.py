@@ -41,6 +41,7 @@ class Activity(Model):
 class Item(Model):
     uuid = UUIDField(primary_key=False, unique=True, default=uuid.uuid4, editable=False)
     name = CharField(max_length=100)
+    rfid = CharField(max_length=100, null=True)
     description = CharField(max_length=500, null=True)
     created = DateTimeField(auto_now_add=True)
     weight = FloatField(null=True)
@@ -65,3 +66,10 @@ class Item(Model):
 
     def __str__(self):
         return self.name
+
+
+class User(Model):
+    uuid = UUIDField(primary_key=False, unique=True, default=uuid.uuid4, editable=False)
+    name = CharField(max_length=100)
+    rfid = CharField(max_length=100, null=True)
+    created = DateTimeField(auto_now_add=True)

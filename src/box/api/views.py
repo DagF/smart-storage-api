@@ -4,8 +4,8 @@ from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveMode
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
 
-from .serializers import BoxSerializer, ActivitySerializer, RFIDSerializer, ItemSerializer
-from ..models import Box, Activity, RFID, Item
+from .serializers import BoxSerializer, ActivitySerializer, RFIDSerializer, ItemSerializer, UserSerializer
+from ..models import Box, Activity, RFID, Item, User
 
 
 class BaseViewSet(GenericViewSet, RetrieveModelMixin):
@@ -32,3 +32,7 @@ class RFIDViewSet(BaseViewSet, RetrieveModelMixin, ListModelMixin, CreateModelMi
 class ItemViewSet(BaseViewSet, RetrieveModelMixin, ListModelMixin, CreateModelMixin, UpdateModelMixin):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+
+class UserViewSet(BaseViewSet, RetrieveModelMixin, ListModelMixin, CreateModelMixin, UpdateModelMixin):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
