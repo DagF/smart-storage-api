@@ -13,7 +13,6 @@ class Box(Model):
     uuid = UUIDField(primary_key=False, unique=True, default=uuid.uuid4, editable=False)
     name = CharField(max_length=4)
     description = CharField(max_length=500, null=True)
-    weight = FloatField(null=True)
 
     def __str__(self):
         return self.name
@@ -73,3 +72,13 @@ class User(Model):
     name = CharField(max_length=100)
     rfid = CharField(max_length=100, null=True)
     created = DateTimeField(auto_now_add=True)
+
+
+class Weight(Model):
+    uuid = UUIDField(primary_key=False, unique=True, default=uuid.uuid4, editable=False)
+    box = ForeignKey(Box)
+    created = DateTimeField(auto_now_add=True)
+    value = FloatField()
+
+    def __str__(self):
+        return self.box.name + " : " + str(self.value) + " Gram"

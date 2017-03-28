@@ -67,6 +67,7 @@ class ItemSerializer(ModelSerializer):
             'type',
         )
 
+
 class UserSerializer(ModelSerializer):
     url_path = "users"
 
@@ -77,4 +78,17 @@ class UserSerializer(ModelSerializer):
             'name',
             'rfid',
             'created',
+        )
+
+
+class WeightSerializer(ModelSerializer):
+    url_path = "users"
+
+    class Meta(object):
+        model = User
+        fields = (
+            'uuid',
+            'box',
+            'created',
+            'value',
         )
