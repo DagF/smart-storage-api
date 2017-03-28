@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer, SlugRelatedField
 
-from ..models import Box, RFID, Activity, Item, User
+from ..models import Box, RFID, Activity, Item, User, Weight
 
 
 class BoxSerializer(ModelSerializer):
@@ -82,10 +82,10 @@ class UserSerializer(ModelSerializer):
 
 
 class WeightSerializer(ModelSerializer):
-    url_path = "users"
+    url_path = "weight"
 
     class Meta(object):
-        model = User
+        model = Weight
         fields = (
             'uuid',
             'box',
