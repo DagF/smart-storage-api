@@ -7,6 +7,6 @@ router = DefaultRouter()
 router.register('box/box', box_views.BoxViewSet)
 router.register('box/activities', box_views.ActivityViewSet)
 router.register('box/rfid', box_views.RFIDViewSet)
-
+router.register('box/items', box_views.ItemViewSet)
 
 urlpatterns = router.urls

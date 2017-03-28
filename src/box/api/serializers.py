@@ -1,6 +1,6 @@
-from rest_framework.serializers import ModelSerializer, SerializerMethodField, SlugRelatedField, Field
+from rest_framework.serializers import ModelSerializer, SlugRelatedField
 
-from ..models import Box, RFID, Activity
+from ..models import Box, RFID, Activity, Item
 
 
 class BoxSerializer(ModelSerializer):
@@ -12,6 +12,7 @@ class BoxSerializer(ModelSerializer):
             'uuid',
             'name',
         )
+
 
 class RFIDSerializer(ModelSerializer):
     url_path = "rfid"
@@ -31,6 +32,7 @@ class RFIDSerializer(ModelSerializer):
             'created',
         )
 
+
 class ActivitySerializer(ModelSerializer):
     url_path = "activities"
     box = SlugRelatedField(
@@ -49,5 +51,18 @@ class ActivitySerializer(ModelSerializer):
         )
 
 
+class ItemSerializer(ModelSerializer):
+    url_path = "items"
 
-
+    class Meta(object):
+        model = Item
+        fields = (
+            'uuid',
+            'name',
+            'description',
+            'created',
+            'weight',
+            'full_weight',
+            'empty_weight',
+            'type',
+        )
