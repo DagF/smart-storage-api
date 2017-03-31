@@ -11,7 +11,7 @@ from rest_framework.exceptions import ValidationError
 
 class Box(Model):
     uuid = UUIDField(primary_key=False, unique=True, default=uuid.uuid4, editable=False)
-    name = CharField(max_length=4)
+    name = CharField(max_length=8, unique=True)
     description = CharField(max_length=500, null=True)
 
     def __str__(self):
