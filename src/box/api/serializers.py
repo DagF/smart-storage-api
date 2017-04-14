@@ -59,6 +59,7 @@ class ItemSerializer(ModelSerializer):
         fields = (
             'uuid',
             'name',
+	    'rfid',
             'description',
             'created',
             'weight',
