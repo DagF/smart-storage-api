@@ -11,7 +11,6 @@ from ..models import Box, Activity, RFID, Item, User, Weight
 class BaseViewSet(GenericViewSet, RetrieveModelMixin):
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     authentication_classes = (BasicAuthentication, SessionAuthentication, TokenAuthentication)
-    permission_classes = (IsAuthenticated,)
 
 
 class BoxViewSet(BaseViewSet, RetrieveModelMixin, ListModelMixin, CreateModelMixin, UpdateModelMixin):
