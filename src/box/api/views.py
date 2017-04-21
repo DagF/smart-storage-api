@@ -72,6 +72,7 @@ class EventViewSet(ViewSet):
         weight = Weight.objects.filter(created__gt=created)
         for w in weight:
             events.append({
+                "box": w.box.name,
                 "type": "weight",
                 "created": w.created,
                 "value": WeightSerializer(w).data
@@ -80,6 +81,7 @@ class EventViewSet(ViewSet):
         rfid = RFID.objects.filter(created__gt=created)
         for r in rfid:
             events.append({
+                "box": r.box.name,
                 "type": "rfid",
                 "created": r.created,
                 "value": RFIDSerializer(r).data
@@ -88,6 +90,7 @@ class EventViewSet(ViewSet):
         activity = Activity.objects.filter(created__gt=created)
         for a in activity:
             events.append({
+                "box": a.box.name,
                 "type": "activity",
                 "created": a.created,
                 "value": ActivitySerializer(a).data
