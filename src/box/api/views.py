@@ -2,7 +2,8 @@ import django_filters.rest_framework
 from django.utils.dateparse import parse_datetime
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet, ViewSet
 
 from .serializers import BoxSerializer, ActivitySerializer, WeightSerializer, RFIDSerializer, ItemSerializer, \
     UserSerializer
@@ -19,16 +20,14 @@ class DateFilterable(BaseViewSet):
     # how it should be done!!! /?newer_than=2017-03-28T17:21:02.135853Z
     # http://www.django-rest-framework.org/api-guide/filtering/#specifying-a-filterset
     def get_queryset(self):
-        created_raw = self.request.query_params.get('newer_than', None)
-        if created_raw:
-            created = parse_datetime(created_raw)
-            queryset = self.model.objects.filter(created__gt=created)
-            print("\n\n\n")
-            print(created)
-            print("\n\n\n")
-        else:
-            queryset = self.model.objects.all()
+        created_raw = self.request.query_params.get('newer_than', '1970-01-01T17:21:02.135853Z')
+        created = parse_datetime(created_raw)
+        queryset = self.model.objects.filter(created__gt=created)
+        print("\n\n\n")
+        print(created)
+        print("\n\n\n")
 
+        print(type(queryset))
         return queryset
 
 
@@ -61,3 +60,39 @@ class RFIDViewSet(DateFilterable, RetrieveModelMixin, ListModelMixin, CreateMode
 class WeightViewSet(DateFilterable, RetrieveModelMixin, ListModelMixin, CreateModelMixin, UpdateModelMixin):
     model = Weight
     serializer_class = WeightSerializer
+
+
+class EventViewSet(ViewSet):
+    def list(self, request, format=None):
+        created_raw = self.request.query_params.get('newer_than', '1970-01-01T17:21:02.135853Z')
+        created = parse_datetime(created_raw)
+
+        events = []
+
+        weight = Weight.objects.filter(created__gt=created)
+        for w in weight:
+            events.append({
+                "type": "weight",
+                "created": w.created,
+                "value": WeightSerializer(w).data
+            })
+
+        rfid = RFID.objects.filter(created__gt=created)
+        for r in rfid:
+            events.append({
+                "type": "rfid",
+                "created": r.created,
+                "value": RFIDSerializer(r).data
+            })
+
+        activity = Activity.objects.filter(created__gt=created)
+        for a in activity:
+            events.append({
+                "type": "activity",
+                "created": a.created,
+                "value": ActivitySerializer(a).data
+            })
+
+        events.sort(key=lambda x: x.get("created"))
+
+        return Response(events)
