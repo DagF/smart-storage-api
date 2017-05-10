@@ -6,4 +6,3 @@ djangorestframework
 uuid
 django-cors-headers
 pymysql
-enum
